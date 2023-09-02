@@ -1,0 +1,39 @@
+{
+  "Global_Times_Military": {
+    "link": "https://www.globaltimes.cn/index.html",
+    "language": "en",
+    "memoize": "False",
+    "translate": "False"
+  },
+  "SCMP_Defence_Diplomacy": {
+    "rss": "https://www.scmp.com/rss/318199/feed",
+    "link": "https://www.scmp.com",
+    "language": "en",
+    "memoize": "False",
+    "translate": "False"
+  },
+  "Huanqiu": {
+    "link": "https://www.huanqiu.com",
+    "language": "zh",
+    "memoize": "True",
+    "translate": "False"
+  },
+  "Sina_Mil_News": {
+    "link": "https://mil.news.sina.com.cn",
+    "language": "zh",
+    "memoize": "False",
+    "translate": "False"
+  },
+  "PLA_Daily": {
+    "link": "http://81.cn:8080",
+    "language": "zh",
+    "memoize": "False",
+    "translate": "False"
+  },
+  "CNR_CN": {
+    "link": "http://military.cnr.cn",
+    "language": "zh",
+    "memoize": "False",
+    "translate": "False"
+  }
+}
