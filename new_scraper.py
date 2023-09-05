@@ -10,10 +10,20 @@ import time
 import feedparser as fp
 import newspaper
 from newspaper import Article
+from newspaper import Config
 from modules import Translator
 import os
 from datetime import date
 import translators as ts
+import pymongo
+import json
+
+HEADERS = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0',
+           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}
+           
+config = Config()
+config.headers = HEADERS
+config.request_timeout = 10
 
 data = {}
 data["newspapers"] = {}
@@ -38,7 +48,7 @@ def parse_config(fname):
     for company, value in cfg.items():
         if "link" not in value:
             raise ValueError(f"Configuration item {company} missing obligatory 'link'.")
-
+    #_ = ts.preaccelerate_and_speedtest()
     return cfg
 
 
@@ -93,10 +103,12 @@ def _handle_fallback(company, value):
     It uses the python newspaper library to extract articles.
 
     """
-    #_ = ts.preaccelerate_and_speedtest()
+    myclient = pymongo.MongoClient("mongodb://54.255.236.171:27017/")
+    db = myclient["redwatcher"]
+    collection = db[company]
     count = 0
     total_count = 0
-    print(f"Building site for {company}")
+    print(f"Scraping articles from {company}")
     paper = newspaper.build(value["link"], language=value["language"],memoize_articles=value["memoize"],verbose=True, browser_user_agent="AppleWebKit/535.19 (KHTML, like Gecko)")
     print(paper.size())
     news_paper = []
@@ -127,22 +139,30 @@ def _handle_fallback(company, value):
             count = count + 1
             #continue
         
-        if value["translate"]:
+        if value["translate"]  == 'True':
             if len(str(content.title)) != 0:
-                trans_title = Translator.Google_Trans(str(content.title))
+                trans_title = Translator.random_translator(str(content.title))
                 #print(trans_title)
             else:
-                trans_title = "NA"
+                trans_title = str(content.title)
             if len(str(content.text)) != 0:
-                trans_text = Translator.Google_Trans(str(content.text))
+                if len(str(content.text)) < 5000:
+                    trans_text = Translator.random_translator(str(content.text))
+                else:
+                    big_str = str(content.text)
+                    trans_text = Translator.random_translator(big_str[0:5000])
                 #print(trans_text)
             else:
-                trans_text = "NA"
+                trans_text = str(content.text)
             if len(str(content.keywords)) != 0:
-                trans_keywords = Translator.Google_Trans(str(content.keywords))
+                if len(str(content.keywords)) < 5000:
+                    trans_keywords = Translator.random_translator(str(content.keywords))
+                else:
+                    big_str2 = str(content.keywords)
+                    trans_keywords = Translator.random_translator(big_str2[0:5000])
                 #print(trans_keywords)
             else:
-                trans_keywords = "NA"
+                trans_keywords = str(content.keywords)
             article = {
                 "title": trans_title,
                 "text": trans_text,
@@ -161,14 +181,15 @@ def _handle_fallback(company, value):
                 "published": content.publish_date.isoformat(),
             }
         news_paper.append(article)
+        ins = collection.insert_one(article)
         print(
-            f" articles downloaded from {company} using newspaper, url: {content.url}"
+            f" articles downloaded from {company} , url: {content.url}"
         )
         count = count + 1
         total_count = total_count + 1
         none_type_count = 0
         print("Total articles processed =",total_count)
-        time.sleep(10)
+        time.sleep(5)
         if count > 100:
             count = 0
             print("Scraped 100 articles. Sleeping for 20 secs")
@@ -193,12 +214,13 @@ def run(config):
         data = news_paper
 
     # Finally it saves the articles as a JSON-file.
+    '''
     try:
         with open(".output/scraped_articles_"+str(company)+"_"+str(date.today())+"_.json", "w", encoding='utf8') as outfile:
             json.dump(data, outfile, indent=2, ensure_ascii=False)
     except Exception as err:
         print(err)
-
+    '''
 
 def main():
     """News site scraper.
