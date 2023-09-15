@@ -8,25 +8,25 @@ def Google_Trans(input_text):
         translated = GoogleTranslator(source='zh-CN', target='en').translate(input_text[0:5000])
         return translated
     except Exception as e:
-        print("Translator Module error"+str(e))
-        print("\nCooling off for 10 secs")
-        time.sleep(10)
+        print("Translator Module error - GoogleTrans")
+        print("\nCooling off for 2 secs")
+        time.sleep(2)
         translated = random_translator(input_text[0:5000])
         return translated
 
 
 def random_translator(q_text):
-    translators = ['alibaba','bing','cloudTranslation','google','iciba','iflyrec','itranslate','lingvanex','modernMt','papago','qqFanyi','qqTranSmart','reverso','sogou','translateCom','youdao']
+    translators = ['alibaba','bing','google','iciba','iflyrec','itranslate','lingvanex','modernMt','papago','qqFanyi','qqTranSmart','reverso','sogou','translateCom','youdao']
     selected_translator = random.choice(translators)
     #print(selected_translator)
     try:
         translated = ts.translate_text(q_text[0:5000],translator=selected_translator,from_language='zh',to_language='en')
         return translated
     except Exception as e:
-        print("Translator Module error"+str(e))
-        print("\nCooling off for 10 secs")
-        time.sleep(10)
-        translated = Google_Trans(q_text[0:5000])
+        print("Translator Module error - "+selected_translator)
+        print("\nCooling off for 2 secs")
+        time.sleep(2)
+        translated = random_translator(q_text[0:5000])
         return translated
 
 

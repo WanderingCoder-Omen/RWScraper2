@@ -119,8 +119,8 @@ def _handle_fallback(company, value):
             content.parse()
             content.nlp()
         except Exception as err:
-            print(str(err)+" will cooloff for 20 secs")
-            time.sleep(20)
+            print(str(err)+" will cooloff for 5 secs")
+            time.sleep(5)
             print("continuing...")
             continue
         # Again, for consistency, if there is no found publish date the
@@ -189,11 +189,11 @@ def _handle_fallback(company, value):
         total_count = total_count + 1
         none_type_count = 0
         print("Total articles processed =",total_count)
-        time.sleep(5)
+        time.sleep(2)
         if count > 100:
             count = 0
-            print("Scraped 100 articles. Sleeping for 20 secs")
-            time.sleep(20)
+            print("Scraped 100 articles. Sleeping for 5 secs")
+            time.sleep(5)
     return news_paper
 
 

@@ -1,0 +1,8 @@
+{
+  "PLA": {
+    "link": "http://81.cn:8080",
+    "language": "zh",
+    "memoize": "False",
+    "translate": "True"
+  }
+}

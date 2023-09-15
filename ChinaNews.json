@@ -1,0 +1,8 @@
+{
+  "ChinaNews": {
+    "link": "https://www.chinanews.com.cn",
+    "language": "zh",
+    "memoize": "False",
+    "translate": "True"
+  }
+}
