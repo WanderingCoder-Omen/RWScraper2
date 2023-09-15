@@ -1,6 +1,6 @@
 {
-   "CCTV": {
-    "link": "https://tv.cctv.com/index.shtml",
+"Sina_Mil_News": {
+    "link": "https://mil.news.sina.com.cn",
     "language": "zh",
     "memoize": "False",
     "translate": "True"

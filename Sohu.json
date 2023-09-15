@@ -1,0 +1,8 @@
+{
+     "Sohu": {
+        "link": "http://news.sohu.com/",
+        "language": "zh",
+        "memoize": "False",
+        "translate": "True"
+      }
+    }
