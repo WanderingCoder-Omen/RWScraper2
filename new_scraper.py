@@ -119,9 +119,9 @@ def _handle_fallback(company, value):
             content.parse()
             content.nlp()
         except Exception as err:
-            print(str(err)+" will cooloff for 5 secs")
+            #print(str(err)+" will cooloff for 5 secs")
             time.sleep(5)
-            print("continuing...")
+            #print("continuing...")
             continue
         # Again, for consistency, if there is no found publish date the
         # article will be skipped.
@@ -129,7 +129,7 @@ def _handle_fallback(company, value):
         # After 10 downloaded articles from the same newspaper without
         # publish date, the company will be skipped.
         if content.publish_date is None:
-            print(f" Article has date of type None...")
+            #print(f" Article has date of type None...")
             content.publish_date = datetime.now()
             none_type_count = none_type_count + 1
             if none_type_count > 10:
@@ -182,9 +182,7 @@ def _handle_fallback(company, value):
             }
         news_paper.append(article)
         ins = collection.insert_one(article)
-        print(
-            f" articles downloaded from {company} , url: {content.url}"
-        )
+        #print( f" articles downloaded from {company} , url: {content.url}")
         count = count + 1
         total_count = total_count + 1
         none_type_count = 0
@@ -192,7 +190,7 @@ def _handle_fallback(company, value):
         time.sleep(2)
         if count > 100:
             count = 0
-            print("Scraped 100 articles. Sleeping for 5 secs")
+            #print("Scraped 100 articles. Sleeping for 5 secs")
             time.sleep(5)
     return news_paper
 

@@ -1,0 +1,8 @@
+{
+    "Huanqiu": {
+      "link": "https://www.huanqiu.com",
+      "language": "zh",
+      "memoize": "True",
+      "translate": "True"
+    }
+  }

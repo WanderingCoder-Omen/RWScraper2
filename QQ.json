@@ -1,8 +1,8 @@
 {
     "QQ_News": {
-        "link": "https://www.qq.com/",
+        "link": "https://qq.com/",
         "language": "zh",
-        "memoize": "True",
+        "memoize": "False",
         "translate": "True"
       }
     }
