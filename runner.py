@@ -33,7 +33,7 @@ while True:
     
     # Check if it's 1:00 AM and scrapers haven't finished
     current_time = time.strftime("%H:%M")
-    if current_time == "10:55":
+    if current_time == "07:30":
         print("Scrapers haven't finished by 11:00 AM. Waiting for 2 hours...")
         time.sleep(2 * 60 * 60)  # Wait for 2 hours (in seconds) = 2 * 60 * 60 seconds = 7200 seconds
         # After 2 hours, the script will continue to the next scheduling iteration (3:00 AM).
